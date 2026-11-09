@@ -375,7 +375,7 @@ footer{padding-block:var(--s400) calc(var(--s400) + 76px);display:flex;justify-c
           <span class="chev" aria-hidden="true"><svg class="ico"><use href="#i-down"/></svg></span>
         </summary>
         <div class="body">
-          <div class="viz"><canvas id="curve" role="img" aria-label="Backtested equity curve of the systematic strategy over 113 weeks, net of costs"></canvas></div>
+          <div class="viz"><canvas id="curve" role="img" aria-label="113 week backtest of the systematic strategy, net of costs, against BTC buy and hold"></canvas></div>
           <ul class="pts">
             <li><span class="k"><svg class="ico"><use href="#i-chart"/></svg><span class="en">Crypto strategy</span><span class="zh">加密策略</span></span><span class="big">31%</span><span class="b6 muted"><span class="en">annualised, Sharpe 1.56 over a 113 week backtest</span><span class="zh">年化收益，113 周回测夏普 1.56</span></span></li>
             <li><span class="k"><svg class="ico"><use href="#i-bolt"/></svg><span class="en">Live execution</span><span class="zh">实盘执行</span></span><span class="big">1M+<small>USD</small></span><span class="b6 muted"><span class="en">live book; slicing cut slippage 1 to 2%</span><span class="zh">实盘规模；拆单降低滑点 1–2%</span></span></li>
@@ -478,7 +478,7 @@ footer{padding-block:var(--s400) calc(var(--s400) + 76px);display:flex;justify-c
 
 <footer class="wrap c5 muted">
   <span>© 2026 Guo Rudong</span>
-  <span><span class="en">Photos and screenshots are my own. Figures match my CV. The Slashiee curve is a backtest, not live performance.</span><span class="zh">照片与截图均为本人所有；数据与简历一致。Slashiee 曲线为回测结果，非实盘业绩。</span></span>
+  <span><span class="en">Photos and screenshots are my own. Figures match my CV. The Slashiee chart is a 113 week backtest against BTC buy and hold, not live performance.</span><span class="zh">照片与截图均为本人所有；数据与简历一致。Slashiee 图表为 113 周回测与 BTC 买入持有的对比，非实盘业绩。</span></span>
 </footer>
 
 <div class="dock" id="dock">
@@ -534,20 +534,26 @@ footer{padding-block:var(--s400) calc(var(--s400) + 76px);display:flex;justify-c
   /* Slashiee curve (real backtest) */
   /* real backtest: 113 weekly returns, net of modelled costs (portfolio-level take-profit variant) */
   var WR=[0.0199,-0.0359,0.0157,0.0246,0.0178,-0.0115,0.0167,-0.0166,-0.0337,0.0198,-0.0026,0.003,-0.0194,0.0158,0.0288,0.0355,0.0158,0.0192,0.0301,-0.0338,0.0154,0.0176,0.0213,0.0162,-0.027,-0.0121,0.0476,-0.026,-0.0194,0.0209,0.016,0.0166,0.0156,0.0183,0.02,0.0177,0.0162,-0.0134,-0.0407,0.0239,0.0152,-0.0063,-0.0085,-0.0601,0.0214,0.0088,-0.0637,-0.0084,-0.024,0.0171,0.0713,0.0226,-0.0162,0.0089,0.0082,-0.0339,0.0186,-0.0051,0.0058,-0.0017,-0.0008,-0.0309,0.0821,0.0249,0.0202,-0.0434,-0.0397,0.0254,0.0186,0.0256,0.0214,0.0233,0.0183,0.0008,0.0195,-0.0207,0.0242,-0.0526,0.0308,0.022,0.0213,-0.0367,0.0181,0.0169,-0.0085,-0.02,0.0187,0.0169,-0.0754,0.0155,0.0219,-0.0251,0.0237,0.0152,0.0173,0.0194,0.0322,0.0252,0.0056,0.0169,-0.0107,0.0156,0.0201,0.0166,-0.0107,0.0155,-0.0002,0.0191,0.0155,-0.0232,0.0159,0.0167,0.0231],N=WR.length+1,S=[1];WR.forEach(function(x){S.push(S[S.length-1]*(1+x))});
+  /* benchmark: BTC buy and hold, same 114 weekly time points (Wed 16:00 UTC), normalised to 1.00 */
+  var BT=[1.0000,0.8451,0.8954,0.8966,0.8889,0.8758,0.8542,0.8954,0.9566,0.9320,0.9387,1.0208,0.9977,1.0856,1.1193,1.3944,1.4270,1.4396,1.4428,1.5120,1.5730,1.4843,1.4230,1.4386,1.4913,1.5695,1.5364,1.4782,1.4433,1.4453,1.3191,1.3309,1.2312,1.2766,1.3067,1.3072,1.1641,1.2783,1.4039,1.4154,1.4597,1.5588,1.6410,1.6129,1.5855,1.6525,1.5778,1.6117,1.6375,1.6422,1.7942,1.7869,1.7777,1.7381,1.8220,1.7068,1.6867,1.6899,1.7146,1.7447,1.7067,1.7681,1.8400,1.6684,1.6325,1.6791,1.5619,1.5385,1.3543,1.3097,1.3910,1.3862,1.3135,1.3109,1.3242,1.3754,1.4567,1.3593,1.3475,1.1163,1.0016,1.0194,1.0149,1.1050,1.0575,1.0762,1.0666,1.0378,1.0736,1.1118,1.1936,1.1433,1.2302,1.1871,1.1664,1.1343,0.9951,0.9430,0.9901,0.9077,0.9057,0.9291,0.9851,0.9944,0.9633,0.9694,0.9554,1.0324,1.1748,1.1639,1.1836,1.1412,1.2647,1.2669];
   var cv=document.getElementById('curve'),cx=cv.getContext('2d');
   function drawCurve(f){var pacc=tok('--panel-accent'),pm=tok('--on-panel-muted'),pl=tok('--panel-line');
     var dp=devicePixelRatio||1,w=cv.clientWidth,h=cv.clientHeight;if(!w)return;cv.width=w*dp;cv.height=h*dp;cx.setTransform(dp,0,0,dp,0,0);cx.clearRect(0,0,w,h);
-    var lo=Math.min.apply(null,S),hi=Math.max.apply(null,S),L=44,R=12,T=28,Bt=24;
+    var all=S.concat(BT),lo=Math.min.apply(null,all)*.97,hi=Math.max.apply(null,all)*1.03,L=44,R=12,T=40,Bt=24;
     function X(i){return L+(w-L-R)*i/(N-1)} function Y(v){return T+(h-T-Bt)*(1-(Math.log(v)-Math.log(lo))/(Math.log(hi)-Math.log(lo)))}
     cx.font='11px "Geist Mono",monospace';cx.fillStyle=pm;cx.strokeStyle=pl;cx.lineWidth=1;
-    [1,1.25,1.5,1.75].forEach(function(v){if(v<lo||v>hi)return;var y=Y(v);cx.beginPath();cx.moveTo(L,y);cx.lineTo(w-R,y);cx.stroke();cx.fillText(v.toFixed(2)+'x',4,y+4)});
+    [0.75,1,1.25,1.5,1.75,2].forEach(function(v){if(v<lo||v>hi)return;var y=Y(v);cx.beginPath();cx.moveTo(L,y);cx.lineTo(w-R,y);cx.stroke();cx.fillText(v.toFixed(2)+'x',4,y+4)});
     cx.fillText('wk 1',L,h-6);cx.fillText('wk 113',w-R-48,h-6);
     var k=Math.max(2,Math.round(N*f));
-        var g=cx.createLinearGradient(0,T,0,h-Bt);g.addColorStop(0,'rgba(140,200,255,.32)');g.addColorStop(1,'rgba(140,200,255,0)');
+    cx.strokeStyle='rgba(157,178,202,.75)';cx.lineWidth=1.6;cx.beginPath();for(var i=0;i<k;i++){i?cx.lineTo(X(i),Y(BT[i])):cx.moveTo(X(i),Y(BT[i]))}cx.stroke();
+    var g=cx.createLinearGradient(0,T,0,h-Bt);g.addColorStop(0,'rgba(140,200,255,.32)');g.addColorStop(1,'rgba(140,200,255,0)');
     cx.beginPath();for(var i=0;i<k;i++){i?cx.lineTo(X(i),Y(S[i])):cx.moveTo(X(i),Y(S[i]))}cx.lineTo(X(k-1),h-Bt);cx.lineTo(X(0),h-Bt);cx.closePath();cx.fillStyle=g;cx.fill();
     cx.strokeStyle=pacc;cx.lineWidth=2.4;cx.beginPath();for(var i=0;i<k;i++){i?cx.lineTo(X(i),Y(S[i])):cx.moveTo(X(i),Y(S[i]))}cx.stroke();
-    cx.fillStyle=pacc;cx.beginPath();cx.arc(X(k-1),Y(S[k-1]),4,0,7);cx.fill();cx.textAlign='right';cx.fillText(S[k-1].toFixed(2)+'x',X(k-1)-10,Y(S[k-1])-8);cx.textAlign='left';
-    cx.fillStyle=pm;cx.fillText(root.lang==='zh'?'回测净值 · 113 周 · 已扣交易成本 · 非实盘业绩':'Backtested equity · 113 weeks · net of costs · not live results',L,16)}
+    cx.fillStyle=pacc;cx.beginPath();cx.arc(X(k-1),Y(S[k-1]),4,0,7);cx.fill();cx.textAlign='right';cx.fillText(S[k-1].toFixed(2)+'x',X(k-1)-10,Y(S[k-1])-8);
+    cx.fillStyle='rgba(157,178,202,.95)';cx.fillText(BT[k-1].toFixed(2)+'x',X(k-1)-10,Y(BT[k-1])+16);cx.textAlign='left';
+    cx.fillStyle=pm;cx.fillText(root.lang==='zh'?'113 周回测 · 策略已扣交易成本 · 非实盘业绩':'113 week backtest · strategy net of costs · not live results',L,14);
+    var lx=L,ly=30;cx.lineWidth=2.4;cx.strokeStyle=pacc;cx.beginPath();cx.moveTo(lx,ly);cx.lineTo(lx+16,ly);cx.stroke();cx.fillStyle=pacc;cx.fillText(root.lang==='zh'?'策略':'Strategy',lx+22,ly+4);
+    var mx=lx+22+cx.measureText(root.lang==='zh'?'策略':'Strategy').width+18;cx.lineWidth=1.6;cx.strokeStyle='rgba(157,178,202,.75)';cx.beginPath();cx.moveTo(mx,ly);cx.lineTo(mx+16,ly);cx.stroke();cx.fillStyle='rgba(157,178,202,.95)';cx.fillText(root.lang==='zh'?'BTC 买入持有':'BTC buy and hold',mx+22,ly+4)}
   var animated=false;
   function animate(){if(animated)return drawCurve(1);animated=true;if(reduce){drawCurve(1);return}var t0=null;
     requestAnimationFrame(function st(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/1400),e=1-Math.pow(1-p,3);drawCurve(.05+.95*e);if(p<1)requestAnimationFrame(st)})}
