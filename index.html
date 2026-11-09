@@ -64,7 +64,7 @@ a{color:inherit} button{font:inherit;color:inherit;touch-action:manipulation}
 
 /* nav */
 .nav{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--s100));z-index:20;display:flex;justify-content:center;margin-top:var(--s100)}
-.pill{display:flex;align-items:center;gap:var(--s300);padding:var(--s75) var(--s75) var(--s75) var(--s200);border-radius:999px;
+.pill{display:flex;align-items:center;gap:0;padding:var(--s75) var(--s75) var(--s75) var(--s200);border-radius:999px;
   background:color-mix(in srgb,var(--surface) 80%,transparent);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--line);box-shadow:var(--shadow);max-width:100%}
 .brand{font-size:14px;line-height:20px;font-weight:600;white-space:nowrap}
 .links{display:flex;gap:var(--s25)}
@@ -82,7 +82,21 @@ a{color:inherit} button{font:inherit;color:inherit;touch-action:manipulation}
 .sheet{position:fixed;inset:0;z-index:15;background:color-mix(in srgb,var(--bg) 95%,transparent);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
   padding:calc(env(safe-area-inset-top,0px) + 96px) max(24px,env(safe-area-inset-right,0px)) calc(env(safe-area-inset-bottom,0px) + 32px) max(24px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:var(--s100)}
 .sheet a{font-size:36px;line-height:40px;font-weight:600;letter-spacing:-.02em;text-decoration:none;padding:var(--s75) 0}
-@media (max-width:760px){.links{display:none}.menu-btn{display:block}.nav{justify-content:stretch}.pill{width:100%;justify-content:space-between;gap:var(--s100)}}
+@media (max-width:760px){.links{display:none}.menu-btn{display:block}.nav{justify-content:stretch}.pill{width:100%;justify-content:space-between;gap:var(--s100)}.full{flex:1;justify-content:space-between;gap:var(--s100)}}
+/* scrolled: the pill slides to the right edge and folds into a small ellipse; hover, focus or tap opens it */
+.full,.mini{overflow:hidden;white-space:nowrap}
+.full{display:flex;align-items:center;gap:var(--s300);max-width:1000px;transition:max-width 480ms var(--ease-page),opacity 260ms ease}
+.mini{display:flex;align-items:center;gap:var(--s75);max-width:0;opacity:0;font-size:14px;line-height:20px;font-weight:600;transition:max-width 480ms var(--ease-page),opacity 260ms ease}
+.mini .mdot{width:8px;height:8px;border-radius:999px;background:var(--accent);flex:none}
+@media (min-width:761px){
+  .nav{container-type:inline-size}
+  .pill{transition:transform 560ms var(--ease-page),padding 300ms ease}
+  .nav.compact .pill{transform:translateX(calc(50cqw - 50%));cursor:pointer}
+  .nav.compact .pill:not(:hover):not(:focus-within):not(.open){padding:var(--s100) var(--s200)}
+  .nav.compact .pill:not(:hover):not(:focus-within):not(.open) .full{max-width:0;opacity:0}
+  .nav.compact .pill:not(:hover):not(:focus-within):not(.open) .mini{max-width:200px;opacity:1}
+}
+@media (prefers-reduced-motion:reduce){.pill,.full,.mini{transition:none}}
 @media (prefers-reduced-motion:no-preference){.sheet:not([hidden]) a{animation:up 500ms var(--ease-page) both}}
 @keyframes up{from{opacity:0;transform:translateY(24px)}}
 
@@ -278,7 +292,8 @@ footer{padding-block:var(--s400) calc(var(--s400) + 76px);display:flex;justify-c
 <a class="skip" href="#main"><span class="en">Skip to content</span><span class="zh">跳到正文</span></a>
 
 <header class="nav">
-  <div class="pill">
+  <div class="pill" id="pill">
+    <div class="full">
     <span class="brand"><span class="en">Guo Rudong</span><span class="zh">郭汝东</span></span>
     <nav class="links" aria-label="Sections">
       <a href="#school"><span class="en">Learning</span><span class="zh">求学</span></a>
@@ -291,6 +306,8 @@ footer{padding-block:var(--s400) calc(var(--s400) + 76px);display:flex;justify-c
       <button id="btn-en" type="button" aria-pressed="true">EN</button>
       <button id="btn-zh" type="button" aria-pressed="false" lang="zh">中文</button>
     </div>
+    </div>
+    <span class="mini" aria-hidden="true"><i class="mdot"></i><span id="mini-en" class="en">Guo Rudong</span><span id="mini-zh" class="zh">郭汝东</span><svg class="ico" style="width:16px;height:16px"><use href="#i-down"/></svg></span>
     <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="sheet" aria-label="Open menu"><i></i><i></i></button>
   </div>
 </header>
@@ -488,9 +505,16 @@ footer{padding-block:var(--s400) calc(var(--s400) + 76px);display:flex;justify-c
   addEventListener('keydown',function(e){if(e.key==='Escape'&&!sh.hidden)menu(false)});
   addEventListener('resize',function(){if(innerWidth>760&&!sh.hidden)menu(false)});
 
-  /* nav current */
-  var navLinks=document.querySelectorAll('.links a');
-  var so=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting)navLinks.forEach(function(a){a.setAttribute('aria-current',a.getAttribute('href')==='#'+en.target.id)})})},{rootMargin:'-45% 0px -50% 0px'});
+  /* nav current + the label on the folded ellipse */
+  var navLinks=document.querySelectorAll('.links a'),miniEn=document.getElementById('mini-en'),miniZh=document.getElementById('mini-zh');
+  var so=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting)navLinks.forEach(function(a){var on=a.getAttribute('href')==='#'+en.target.id;a.setAttribute('aria-current',on);if(on){miniEn.textContent=a.querySelector('.en').textContent;miniZh.textContent=a.querySelector('.zh').textContent}})})},{rootMargin:'-45% 0px -50% 0px'});
+  var navEl=document.querySelector('.nav'),pill=document.getElementById('pill'),compactOn=false;
+  function setCompact(){var y=scrollY,want=compactOn?y>60:y>180;if(want!==compactOn){compactOn=want;navEl.classList.toggle('compact',want);if(!want)pill.classList.remove('open');
+    if(!want){miniEn.textContent='Guo Rudong';miniZh.textContent='郭汝东'}}}
+  addEventListener('scroll',setCompact,{passive:true});setCompact();
+  pill.addEventListener('click',function(e){if(compactOn&&!pill.classList.contains('open')&&innerWidth>760){pill.classList.add('open');e.preventDefault();e.stopPropagation()}},true);
+  document.addEventListener('click',function(e){if(pill.classList.contains('open')&&!pill.contains(e.target))pill.classList.remove('open')});
+  navLinks.forEach(function(a){a.addEventListener('click',function(){pill.classList.remove('open')})});
   ['school','work','moments','toolkit','contact'].forEach(function(id){so.observe(document.getElementById(id))});
 
   /* copy */
