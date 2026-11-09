@@ -141,6 +141,8 @@ main section{padding-block:var(--s900) 0;scroll-margin-top:var(--s800)}
 .viz{border-radius:16px;overflow:hidden;aspect-ratio:16/9;max-width:100%;background:var(--panel)}
 .viz.light{background:var(--raised)}
 .viz canvas,.viz svg{display:block;width:100%;height:100%}
+.viz.shot{background:var(--raised)}
+.viz.shot img{display:block;width:100%;height:100%;object-fit:cover;object-position:top left}
 .pts{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s300) var(--s200)}
 .pts li{display:grid;gap:var(--s50);align-content:start;min-width:0}
 .pts .k{display:flex;align-items:center;gap:var(--s75);font-size:14px;line-height:20px;font-weight:600}
@@ -356,7 +358,7 @@ footer{padding-block:var(--s400) calc(var(--s400) + 76px);display:flex;justify-c
           <span class="chev" aria-hidden="true"><svg class="ico"><use href="#i-down"/></svg></span>
         </summary>
         <div class="body">
-          <div class="viz"><canvas id="curve" role="img" aria-label="Illustrative equity curve of the systematic strategy against buy and hold"></canvas></div>
+          <div class="viz"><canvas id="curve" role="img" aria-label="Backtested equity curve of the systematic strategy over 113 weeks, net of costs"></canvas></div>
           <ul class="pts">
             <li><span class="k"><svg class="ico"><use href="#i-chart"/></svg><span class="en">Crypto strategy</span><span class="zh">加密策略</span></span><span class="big">31%</span><span class="b6 muted"><span class="en">annualised, Sharpe 1.56 over a 113 week backtest</span><span class="zh">年化收益，113 周回测夏普 1.56</span></span></li>
             <li><span class="k"><svg class="ico"><use href="#i-bolt"/></svg><span class="en">Live execution</span><span class="zh">实盘执行</span></span><span class="big">1M+<small>USD</small></span><span class="b6 muted"><span class="en">live book; slicing cut slippage 1 to 2%</span><span class="zh">实盘规模；拆单降低滑点 1–2%</span></span></li>
@@ -372,12 +374,12 @@ footer{padding-block:var(--s400) calc(var(--s400) + 76px);display:flex;justify-c
           <span class="chev" aria-hidden="true"><svg class="ico"><use href="#i-down"/></svg></span>
         </summary>
         <div class="body">
-          <div class="viz light"><svg id="dashviz" viewBox="0 0 400 225" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg></div>
+          <div class="viz shot"><img src="photos/fosun-dashboard.jpg" alt="Screenshot of the structured trading dashboard market monitor I worked with at StarRoad Technology" loading="lazy" decoding="async"></div>
           <ul class="pts">
             <li><span class="k"><svg class="ico"><use href="#i-layers"/></svg><span class="en">Structured products</span><span class="zh">结构性产品</span></span><span class="big">20%</span><span class="b6 muted"><span class="en">comparison time saved by my pricing dashboard</span><span class="zh">定价看板为同事节省的比价时间</span></span></li>
             <li><span class="k"><svg class="ico"><use href="#i-pie"/></svg><span class="en">Public funds</span><span class="zh">公募基金</span></span><span class="big">~1,000</span><span class="b6 muted"><span class="en">funds checked, 58 due diligence reports</span><span class="zh">只基金核对，58 份尽调报告</span></span></li>
-            <li><span class="k"><svg class="ico"><use href="#i-swap"/></svg><span class="en">Securities lending</span><span class="zh">股票借贷</span></span><span class="big"><span class="en">~HK$10bn</span><span class="zh">近百亿</span></span><span class="b6 muted"><span class="en">client holdings matched to borrower demand</span><span class="zh">港元客户持仓匹配借券需求</span></span></li>
-            <li><span class="k"><svg class="ico"><use href="#i-spark"/></svg><span class="en">AI workflows</span><span class="zh">AI 工作流</span></span><span class="big">1<small><span class="en">night</span><span class="zh">晚</span></small></span><span class="b6 muted"><span class="en">to build the monitoring agent prototype</span><span class="zh">搭出舆情与财报监控 Agent 原型</span></span></li>
+            <li><span class="k"><svg class="ico"><use href="#i-swap"/></svg><span class="en">Securities lending</span><span class="zh">股票借贷</span></span><span class="big"><span class="en">End to end</span><span class="zh">全流程</span></span><span class="b6 muted"><span class="en">drove the SBL project as PM and learned how the whole business is set up</span><span class="zh">担任 PM 推进 SBL 项目，了解业务从搭建到落地的全流程</span></span></li>
+            <li><span class="k"><svg class="ico"><use href="#i-spark"/></svg><span class="en">AI workflows</span><span class="zh">AI 工作流</span></span><span class="big">5<small><span class="en">hours</span><span class="zh">小时</span></small></span><span class="b6 muted"><span class="en">to build the monitoring agent prototype</span><span class="zh">搭出舆情与财报监控 Agent 原型</span></span></li>
           </ul>
         </div>
       </details>
@@ -459,7 +461,7 @@ footer{padding-block:var(--s400) calc(var(--s400) + 76px);display:flex;justify-c
 
 <footer class="wrap c5 muted">
   <span>© 2026 Guo Rudong</span>
-  <span><span class="en">Photos are my own. Figures match my CV; charts are illustrative.</span><span class="zh">照片均为本人拍摄或合影；数据与简历一致，图表为示意。</span></span>
+  <span><span class="en">Photos and screenshots are my own. Figures match my CV. The Slashiee curve is a backtest, not live performance.</span><span class="zh">照片与截图均为本人所有；数据与简历一致。Slashiee 曲线为回测结果，非实盘业绩。</span></span>
 </footer>
 
 <div class="dock" id="dock">
@@ -505,23 +507,23 @@ footer{padding-block:var(--s400) calc(var(--s400) + 76px);display:flex;justify-c
   function el(t,a,p){var n=document.createElementNS(NS,t);for(var k in a)n.setAttribute(k,a[k]);if(p)p.appendChild(n);return n}
   function rng(s){return function(){s=(s*1664525+1013904223)%4294967296;return s/4294967296}}
 
-  /* Slashiee curve (illustrative) */
-  var N=113,r=rng(7),S=[1],B=[1];for(var i=1;i<N;i++){S.push(S[i-1]*(1+.0052+(r()-.5)*.034));B.push(B[i-1]*(1+.0012+(r()-.5)*.075))}
+  /* Slashiee curve (real backtest) */
+  /* real backtest: 113 weekly returns, net of modelled costs (portfolio-level take-profit variant) */
+  var WR=[0.0199,-0.0359,0.0157,0.0246,0.0178,-0.0115,0.0167,-0.0166,-0.0337,0.0198,-0.0026,0.003,-0.0194,0.0158,0.0288,0.0355,0.0158,0.0192,0.0301,-0.0338,0.0154,0.0176,0.0213,0.0162,-0.027,-0.0121,0.0476,-0.026,-0.0194,0.0209,0.016,0.0166,0.0156,0.0183,0.02,0.0177,0.0162,-0.0134,-0.0407,0.0239,0.0152,-0.0063,-0.0085,-0.0601,0.0214,0.0088,-0.0637,-0.0084,-0.024,0.0171,0.0713,0.0226,-0.0162,0.0089,0.0082,-0.0339,0.0186,-0.0051,0.0058,-0.0017,-0.0008,-0.0309,0.0821,0.0249,0.0202,-0.0434,-0.0397,0.0254,0.0186,0.0256,0.0214,0.0233,0.0183,0.0008,0.0195,-0.0207,0.0242,-0.0526,0.0308,0.022,0.0213,-0.0367,0.0181,0.0169,-0.0085,-0.02,0.0187,0.0169,-0.0754,0.0155,0.0219,-0.0251,0.0237,0.0152,0.0173,0.0194,0.0322,0.0252,0.0056,0.0169,-0.0107,0.0156,0.0201,0.0166,-0.0107,0.0155,-0.0002,0.0191,0.0155,-0.0232,0.0159,0.0167,0.0231],N=WR.length+1,S=[1];WR.forEach(function(x){S.push(S[S.length-1]*(1+x))});
   var cv=document.getElementById('curve'),cx=cv.getContext('2d');
   function drawCurve(f){var pacc=tok('--panel-accent'),pm=tok('--on-panel-muted'),pl=tok('--panel-line');
     var dp=devicePixelRatio||1,w=cv.clientWidth,h=cv.clientHeight;if(!w)return;cv.width=w*dp;cv.height=h*dp;cx.setTransform(dp,0,0,dp,0,0);cx.clearRect(0,0,w,h);
-    var all=S.concat(B),lo=Math.min.apply(null,all),hi=Math.max.apply(null,all),L=40,R=12,T=28,Bt=24;
+    var lo=Math.min.apply(null,S),hi=Math.max.apply(null,S),L=44,R=12,T=28,Bt=24;
     function X(i){return L+(w-L-R)*i/(N-1)} function Y(v){return T+(h-T-Bt)*(1-(Math.log(v)-Math.log(lo))/(Math.log(hi)-Math.log(lo)))}
     cx.font='11px "Geist Mono",monospace';cx.fillStyle=pm;cx.strokeStyle=pl;cx.lineWidth=1;
-    [1,Math.sqrt(hi),hi].forEach(function(v){var y=Y(v);cx.beginPath();cx.moveTo(L,y);cx.lineTo(w-R,y);cx.stroke();cx.fillText(v.toFixed(1)+'x',6,y+4)});
+    [1,1.25,1.5,1.75].forEach(function(v){if(v<lo||v>hi)return;var y=Y(v);cx.beginPath();cx.moveTo(L,y);cx.lineTo(w-R,y);cx.stroke();cx.fillText(v.toFixed(2)+'x',4,y+4)});
     cx.fillText('wk 1',L,h-6);cx.fillText('wk 113',w-R-48,h-6);
     var k=Math.max(2,Math.round(N*f));
-    cx.strokeStyle=pm;cx.globalAlpha=.5;cx.lineWidth=1.4;cx.beginPath();for(var i=0;i<k;i++){i?cx.lineTo(X(i),Y(B[i])):cx.moveTo(X(i),Y(B[i]))}cx.stroke();cx.globalAlpha=1;
-    var g=cx.createLinearGradient(0,T,0,h-Bt);g.addColorStop(0,'rgba(140,200,255,.32)');g.addColorStop(1,'rgba(140,200,255,0)');
+        var g=cx.createLinearGradient(0,T,0,h-Bt);g.addColorStop(0,'rgba(140,200,255,.32)');g.addColorStop(1,'rgba(140,200,255,0)');
     cx.beginPath();for(var i=0;i<k;i++){i?cx.lineTo(X(i),Y(S[i])):cx.moveTo(X(i),Y(S[i]))}cx.lineTo(X(k-1),h-Bt);cx.lineTo(X(0),h-Bt);cx.closePath();cx.fillStyle=g;cx.fill();
     cx.strokeStyle=pacc;cx.lineWidth=2.4;cx.beginPath();for(var i=0;i<k;i++){i?cx.lineTo(X(i),Y(S[i])):cx.moveTo(X(i),Y(S[i]))}cx.stroke();
-    cx.fillStyle=pacc;cx.beginPath();cx.arc(X(k-1),Y(S[k-1]),4,0,7);cx.fill();
-    cx.fillStyle=pm;cx.fillText(root.lang==='zh'?'示意曲线 · 策略 vs 买入持有':'Illustrative · strategy vs buy and hold',L,16)}
+    cx.fillStyle=pacc;cx.beginPath();cx.arc(X(k-1),Y(S[k-1]),4,0,7);cx.fill();cx.textAlign='right';cx.fillText(S[k-1].toFixed(2)+'x',X(k-1)-10,Y(S[k-1])-8);cx.textAlign='left';
+    cx.fillStyle=pm;cx.fillText(root.lang==='zh'?'回测净值 · 113 周 · 已扣交易成本 · 非实盘业绩':'Backtested equity · 113 weeks · net of costs · not live results',L,16)}
   var animated=false;
   function animate(){if(animated)return drawCurve(1);animated=true;if(reduce){drawCurve(1);return}var t0=null;
     requestAnimationFrame(function st(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/1400),e=1-Math.pow(1-p,3);drawCurve(.05+.95*e);if(p<1)requestAnimationFrame(st)})}
@@ -530,11 +532,6 @@ footer{padding-block:var(--s400) calc(var(--s400) + 76px);display:flex;justify-c
   addEventListener('resize',function(){if(animated)drawCurve(1)});
   document.querySelectorAll('.job').forEach(function(d){d.addEventListener('toggle',function(){if(d.open&&d.contains(cv))animate()})});
 
-  /* Fosun dashboard (illustrative) */
-  (function(){var dv=document.getElementById('dashviz'),acc=tok('--accent'),fg=tok('--fg'),mut=tok('--muted');el('rect',{width:400,height:225,fill:tok('--raised')},dv);
-    [['COUPON',[.2,.45,.9,.6,.3,.15]],['STRIKE',[.25,.55,.95,.7,.35,.2]],['TENOR',[.4,1,.65,.35,.2,.1]]].forEach(function(p,i){var x0=16+i*126;el('rect',{x:x0,y:16,width:116,height:193,rx:12,fill:tok('--surface')},dv);
-      var t=el('text',{x:x0+12,y:36,'font-family':'Geist Mono,monospace','font-size':9,fill:mut},dv);t.textContent=p[0];var mx=Math.max.apply(null,p[1]);
-      p[1].forEach(function(v,j){var h=v*130;el('rect',{x:x0+12+j*16,y:195-h,width:11,height:h,rx:3,fill:v===mx?acc:fg,'fill-opacity':v===mx?1:.16},dv)})})})();
 
   /* Victoria Harbour line art */
   function skyline(svg,stroke,op,glintColor){
