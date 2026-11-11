@@ -155,6 +155,13 @@ main section{padding-block:var(--s900) 0;scroll-margin-top:var(--s800)}
 .viz{border-radius:16px;overflow:hidden;aspect-ratio:16/9;max-width:100%;background:var(--panel)}
 .viz.light{background:var(--raised)}
 .viz canvas,.viz svg{display:block;width:100%;height:100%}
+.dify{grid-column:1/-1;display:grid;gap:var(--s100)}
+.dify-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s100)}
+.dify-row button{all:unset;display:block;cursor:zoom-in;aspect-ratio:16/10;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:#FCFCFD;transition:transform 300ms var(--ease-out),box-shadow 300ms ease}
+.dify-row button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.dify-row img{display:block;width:100%;height:100%;object-fit:contain}
+@media (hover:hover) and (pointer:fine){.dify-row button:hover{transform:translateY(-2px);box-shadow:var(--shadow)}}
+@media (max-width:640px){.dify-row{grid-template-columns:none;grid-auto-flow:column;grid-auto-columns:82%;overflow-x:auto;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none}.dify-row button{scroll-snap-align:start}.dify-row::-webkit-scrollbar{display:none}}
 .viz.shot{background:var(--raised)}
 .viz.shot img{display:block;width:100%;height:100%;object-fit:cover;object-position:top left}
 .pts{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s300) var(--s200)}
@@ -398,6 +405,14 @@ footer{padding-block:var(--s400) calc(var(--s400) + 76px);display:flex;justify-c
             <li><span class="k"><svg class="ico"><use href="#i-swap"/></svg><span class="en">Securities lending</span><span class="zh">股票借贷</span></span><span class="big"><span class="en">End to end</span><span class="zh">全流程</span></span><span class="b6 muted"><span class="en">drove the SBL project as PM and learned how the whole business is set up</span><span class="zh">担任 PM 推进 SBL 项目，了解业务从搭建到落地的全流程</span></span></li>
             <li><span class="k"><svg class="ico"><use href="#i-spark"/></svg><span class="en">AI workflows</span><span class="zh">AI 工作流</span></span><span class="big">5<small><span class="en">hours</span><span class="zh">小时</span></small></span><span class="b6 muted"><span class="en">to build the monitoring agent prototype</span><span class="zh">搭出舆情与财报监控 Agent 原型</span></span></li>
           </ul>
+          <div class="dify">
+            <span class="c3 muted"><span class="en">Dify workflows I built</span><span class="zh">我搭建的 Dify 工作流</span></span>
+            <div class="dify-row">
+              <button type="button" data-src="photos/fosun-dify-1.jpg" data-alt="Dify workflow canvas: fund house adverse news analysis"><img src="photos/fosun-dify-1.jpg" alt="Dify workflow canvas: fund house adverse news analysis" loading="lazy" decoding="async"></button>
+              <button type="button" data-src="photos/fosun-dify-2.jpg" data-alt="Dify workflow canvas: StarRoad AI risk monitoring prototype"><img src="photos/fosun-dify-2.jpg" alt="Dify workflow canvas: StarRoad AI risk monitoring prototype" loading="lazy" decoding="async"></button>
+              <button type="button" data-src="photos/fosun-dify-3.jpg" data-alt="Dify workflow canvas: CAPM and Mean-CVaR advisory workflow"><img src="photos/fosun-dify-3.jpg" alt="Dify workflow canvas: CAPM and Mean-CVaR advisory workflow" loading="lazy" decoding="async"></button>
+            </div>
+          </div>
         </div>
       </details>
       <details class="job">
@@ -642,6 +657,7 @@ footer{padding-block:var(--s400) calc(var(--s400) + 76px);display:flex;justify-c
       f.querySelector('button').onclick=function(){lbi.src='photos/'+p[0]+'.jpg';lbi.alt=p[1];try{lb.showModal()}catch(e){lb.setAttribute('open','')}};shots.appendChild(f)});
     rail.appendChild(d)});
   lb.querySelector('.x').onclick=function(){lb.close()}; lb.addEventListener('click',function(e){if(e.target===lb)lb.close()});
+  document.querySelectorAll('.dify-row button').forEach(function(b){b.onclick=function(){lbi.src=b.dataset.src;lbi.alt=b.dataset.alt;try{lb.showModal()}catch(e){lb.setAttribute('open','')}}});
   var prev=document.getElementById('rail-prev'),next=document.getElementById('rail-next');
   function upd(){var max=rail.scrollWidth-rail.clientWidth,p=max>0?rail.scrollLeft/max:0,vis=rail.clientWidth/rail.scrollWidth;
     bar.style.width=Math.max(8,vis*100)+'%';bar.style.transform='translateX('+(p*(1/vis-1)*100)+'%)';prev.disabled=rail.scrollLeft<4;next.disabled=rail.scrollLeft>max-4}
